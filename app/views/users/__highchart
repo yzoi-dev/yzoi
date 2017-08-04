@@ -1,0 +1,58 @@
+$('#user_statistic').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '用户答题情况监控'
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            },
+        },
+        yAxis: {
+            title: {
+                text: 'Amount'
+            },
+            min: 0
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x:%e. %b}: {point.y}'
+        },
+
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },
+
+        series: [{
+            name: '<?php echo $user->name;?>的提交数',
+            data: [
+                <?php
+                foreach ($user_statistics as $item) {
+                    echo '[Date.UTC(', $item['days'], '), ', $item['total'], '],';
+                }
+                ?>
+            ]
+        }, {
+            name: '<?php echo $user->name;?>的通过数',
+            data: [
+                <?php
+                foreach ($userac_statistics as $item) {
+                    echo '[Date.UTC(', $item['days'], '), ', $item['total'], '],';
+                }
+                ?>
+            ]
+        }]
+    });
