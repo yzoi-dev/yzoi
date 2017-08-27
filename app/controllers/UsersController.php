@@ -82,7 +82,7 @@ class UsersController extends ControllerBase
         //echo "asdf";
 
         //echo $this->t->_('hi');
-		
+
 		//var_dump($loginUser->has_());
         //var_dump(Solutions::user_solved_problems($this->auth->getIdentity()->id));
         //echo Common::accept_status(1006);
@@ -615,8 +615,6 @@ YZOI Online Judge.</p>";
         } catch (AuthException $e) {
             $this->flashSession->error($e->getMessage());
         }
-
-        //$this->flash->notice("asdfewadsf");
 
         //默认显示登录表单
         $this->view->form = $form;

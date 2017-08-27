@@ -1,0 +1,23 @@
+<script>
+
+    var re = new XMLHttpRequest();
+
+    re.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            switch (this.status) {
+                case 200:
+                case 201:
+                case 400:
+                    //fail(this.responseText);
+                      console.log(this.responseText);
+                    break;
+                default:
+                    alert("Error occured!");
+            }
+            this.abort();
+        }
+    };
+
+    re.open('get', 'http://localhost/hgoi/ident', true);
+    re.send();
+</script>

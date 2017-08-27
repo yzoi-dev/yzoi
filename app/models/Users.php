@@ -145,10 +145,12 @@ class Users Extends Model
         return $this->validate($validator);
     }
 
-    public static function findUsersRanks($number = 0, $offset = 0)
+    public static function findUsersRanks($number = 0)
     {
         //$number = ($number > 0) ? intval($number) : intval(self::FRONT_PER_PAGE);
-        $sql = "SELECT
+
+        //Query by SQL, deprecated.
+        /*$sql = "SELECT
                     `users`.id,
                     `users`.name,
                     `users`.nick,
@@ -167,7 +169,14 @@ class Users Extends Model
         $ranks = new Users();
         $result = new Resultset(null, $ranks, $ranks->getReadConnection()->query($sql));
 
-        return $result;
+        return $result;*/
+
+        return Users::find([
+            "active = 'Y' and id != 1",
+            'columns' => 'id, name, nick, solved, submit, avatar',
+            'order' => 'solved DESC, submit ASC, create_at DESC'
+        ]);
+
     }
 
     public static function findUsersRanks_monthly($number = 0, $offset = 0)

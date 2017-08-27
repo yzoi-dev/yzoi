@@ -19,7 +19,7 @@ class Auth extends Component
      *
      * @param array $credentials
      * @throws Exception
-     * @return boolean
+     * @return array $user_info
      */
     public function check($credentials)
     {
@@ -48,6 +48,10 @@ class Auth extends Component
         }
 
         $this->session->set('yzoi-auth-identity', $user);
+
+//        var_dump($this->session->getId());
+//        var_dump($this->session->isStarted());
+        return $user->toArray();
     }
 
 
@@ -82,6 +86,7 @@ class Auth extends Component
      *
      * @return bool
      */
+
     public function hasRememberMe()
     {
         return $this->cookies->has('RMU');
@@ -113,6 +118,8 @@ class Auth extends Component
                     $this->saveSuccessLogin($user);
 
                     return $this->response->redirect('users');
+                } else {
+                    $this->remove();
                 }
             }
         }
@@ -135,31 +142,6 @@ class Auth extends Component
     {
         return $this->session->get('yzoi-auth-identity');
     }
-
-	/**
-    public function is_ultraman($identity)
-    {
-        if ($identity && $identity->privilege)
-        {
-            if ($identity->privilege->name == Privileges::NAME_ADMINISTRATOR || $identity->privilege->name == Privileges::NAME_ULTRAMAN)
-                return true;
-        }
-
-        return false;
-    }
-
-    public function is_admin($identity)
-    {
-        if ($identity && $identity->privilege)
-        {
-            if ($identity->privilege->name == Privileges::NAME_ADMINISTRATOR)
-                return true;
-        }
-
-        return false;
-    }
-	*/
-
 
     /**
      * Removes the user identity information from session

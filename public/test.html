@@ -1,0 +1,29 @@
+<script>
+  var formData = new FormData();
+
+formData.append("name", "lsdsjy");
+formData.append("password", "654321");
+//formData.append("remember", "false");
+
+    var re = new XMLHttpRequest();
+
+    re.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            switch (this.status) {
+                case 200:
+                case 201:
+                    console.log(this.responseText);
+                    break;
+                case 400:
+                    //fail(this.responseText);
+                    break;
+                default:
+                    alert("Error occured!");
+            }
+            this.abort();
+        }
+    };
+
+    re.open('POST', 'http://localhost/hgoi/auth', true);
+    re.send(formData);
+</script>
